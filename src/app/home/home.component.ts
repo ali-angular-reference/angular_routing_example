@@ -13,13 +13,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  onLoadServers(){
+  onLoadServer(id){
     // some calc, some data manipulation  
-    if(Math.random()>0.5){ // change change the routing depending on a condition
-      this.router.navigate(['/servers'])
-    } else {
-      this.router.navigate(['/servers'])
-    }
+    this.router.navigate(['/servers',id,'edit'],{queryParams:{allowEdit:'1'}, fragment:'loading'})
   }
 
 }
