@@ -11,6 +11,7 @@ import { ServersService } from '../servers.service';
 })
 export class ServerComponent implements OnInit {
   server: {id: number, name: string, status: string};
+  allowEdit=false;
 
   constructor(private serversService: ServersService,
     private route: ActivatedRoute,
@@ -26,6 +27,14 @@ export class ServerComponent implements OnInit {
         this.server = this.serversService.getServer(+params['id']);
       }
     );
+
+    this.route.queryParams
+    .subscribe(
+      // check if server is allowed to edit
+      (queryParams: Params) => {
+        this.allowEdit = queryParams['allowEdit'] === '1' ? true : false;
+      } 
+  )
   }
 
   onEditServer(){
