@@ -12,6 +12,8 @@ export class EditServerComponent implements OnInit {
   server: {id: number, name: string, status: string};
   serverName = '';
   serverStatus = '';
+  allowEdit = false;
+  id = 0;
 
   constructor(private serversService: ServersService,
     private route: ActivatedRoute) { }
@@ -21,7 +23,13 @@ export class EditServerComponent implements OnInit {
     console.log(this.route.snapshot.queryParams)
     console.log(this.route.snapshot.fragment) // not reative to changes after the component has been loaded
     // reactive 
-    this.route.queryParams.subscribe()
+    this.route.queryParams
+      .subscribe(
+        // check if server is allowed to edit
+        (queryParams: Params) => {
+          this.allowEdit = queryParams['allowEdit'] === '1' ? true : false;
+        } 
+      )
     this.route.fragment.subscribe()
     this.server = this.serversService.getServer(1);
     this.serverName = this.server.name;
